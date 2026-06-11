@@ -1,7 +1,7 @@
-const CACHE_NAME = 'comments-app-cache-v1';
+const CACHE_NAME = 'comments-app-cache-v2';
 const ASSETS = [
   '/',
-  '/manifest.json',
+  '/manifest.webmanifest',
   '/icon-192x192.png',
   '/icon-512x512.png',
 ];
