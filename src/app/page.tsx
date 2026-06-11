@@ -61,6 +61,10 @@ export default function Home() {
   // Toast status states
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
 
+  // Greeting & Stats Toggle States
+  const [greeting, setGreeting] = useState<string>("أهلاً بكِ");
+  const [showStats, setShowStats] = useState<boolean>(false);
+
   // Check session cookie on load
   const checkSession = async () => {
     try {
@@ -109,6 +113,13 @@ export default function Home() {
     const savedTheme = localStorage.getItem("app_theme");
     if (savedTheme === "light") {
       setIsLightMode(true);
+    }
+    // Set dynamic greeting
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      setGreeting("صباح الخير");
+    } else {
+      setGreeting("مساء الخير");
     }
     // Register PWA Service Worker
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
@@ -350,7 +361,7 @@ export default function Home() {
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
                 <span className="bg-gradient-to-r from-[#FF6C37] to-[#FF3B30] bg-clip-text text-transparent">
-                  أهلاً بكِ يا أزهار
+                  {greeting} يا أزهار
                 </span>{" "}
                 👋
               </h1>
@@ -370,6 +381,21 @@ export default function Home() {
                 <Sun className="w-4 h-4 text-amber-500 animate-pulse" />
               )}
             </button>
+
+            {/* Stats Toggle Button */}
+            <button
+              onClick={() => setShowStats(!showStats)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all active:scale-95 cursor-pointer ${
+                showStats 
+                  ? "bg-[#FF6C37]/15 border-[#FF6C37]/30 text-[#FF6C37]" 
+                  : "bg-[var(--panel-bg)] hover:bg-[var(--card-hover-bg)] border border-[var(--panel-border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              }`}
+              title="عرض إحصائيات النظام وحالة الاتصال"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>حالة النظام</span>
+            </button>
+
             <button 
               onClick={fetchComments}
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--panel-bg)] hover:bg-[var(--card-hover-bg)] border border-[var(--panel-border)] text-[var(--text-primary)] transition-all text-xs font-semibold active:scale-95 cursor-pointer"
@@ -387,45 +413,47 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Stats Panel */}
-        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs text-[var(--text-secondary)] block mb-1">إجمالي الردود الموثقة</span>
-              <span className="text-2xl font-bold text-[var(--text-primary)]">{loading ? "..." : comments.length}</span>
+        {/* Stats Panel (Collapsible) */}
+        {showStats && (
+          <section className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 transition-all duration-300">
+            <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
+              <div>
+                <span className="text-xs text-[var(--text-secondary)] block mb-1">إجمالي الردود الموثقة</span>
+                <span className="text-2xl font-bold text-[var(--text-primary)]">{loading ? "..." : comments.length}</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-[#FF6C37]/10 flex items-center justify-center text-[#FF6C37]">
+                <FileText className="w-5 h-5" />
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#FF6C37]/10 flex items-center justify-center text-[#FF6C37]">
-              <FileText className="w-5 h-5" />
-            </div>
-          </div>
 
-          <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs text-[var(--text-secondary)] block mb-1">نتائج البحث المصفاة</span>
-              <span className="text-2xl font-bold text-[var(--text-primary)]">{loading ? "..." : filteredComments.length}</span>
+            <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
+              <div>
+                <span className="text-xs text-[var(--text-secondary)] block mb-1">نتائج البحث المصفاة</span>
+                <span className="text-2xl font-bold text-[var(--text-primary)]">{loading ? "..." : filteredComments.length}</span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
+                <Filter className="w-5 h-5" />
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
-              <Filter className="w-5 h-5" />
-            </div>
-          </div>
 
-          <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
-            <div>
-              <span className="text-xs text-[var(--text-secondary)] block mb-1">حالة النظام والبيانات</span>
-              <span className="text-sm font-semibold text-emerald-500 flex items-center gap-2 mt-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse block"></span> المنظومة تعمل ومتصلة
-              </span>
+            <div className="glass-panel rounded-2xl p-5 flex items-center justify-between">
+              <div>
+                <span className="text-xs text-[var(--text-secondary)] block mb-1">حالة النظام والبيانات</span>
+                <span className="text-sm font-semibold text-emerald-500 flex items-center gap-2 mt-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse block"></span> المنظومة تعمل ومتصلة
+                </span>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* Search and Filter Panel */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-6">
+        {/* Search and Filter Panel (Responsive Grid) */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
           {/* Search Input */}
-          <div className="glass-panel rounded-2xl p-4 flex-1 flex items-center gap-3">
+          <div className="glass-panel rounded-2xl p-4 md:col-span-6 flex items-center gap-3">
             <Search className="text-[var(--text-secondary)] w-4 h-4" />
             <input
               type="text"
@@ -442,7 +470,7 @@ export default function Home() {
           </div>
 
           {/* Filter Dropdown */}
-          <div className="glass-panel rounded-2xl p-4 flex items-center gap-3 min-w-[200px]">
+          <div className="glass-panel rounded-2xl p-4 md:col-span-3 flex items-center gap-3">
             <Filter className="text-[var(--text-secondary)] w-4 h-4" />
             <select
               value={selectedPostId}
@@ -459,7 +487,7 @@ export default function Home() {
           </div>
 
           {/* Date Filter */}
-          <div className="glass-panel rounded-2xl p-4 flex items-center gap-3 min-w-[200px]">
+          <div className="glass-panel rounded-2xl p-4 md:col-span-3 flex items-center gap-3">
             <Calendar className="text-[var(--text-secondary)] w-4 h-4" />
             <input
               type="date"
