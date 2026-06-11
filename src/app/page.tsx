@@ -283,8 +283,12 @@ export default function Home() {
         
         <div className="glass-panel rounded-3xl w-full max-w-md p-8 shadow-2xl relative z-10 border-[var(--panel-border)]">
           <div className="flex flex-col items-center mb-8 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#FF6C37] to-[#FF3B30] flex items-center justify-center shadow-lg shadow-[#FF6C37]/25 mb-4">
-              <MessageSquare className="text-white w-7 h-7" />
+            <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-lg border border-[var(--panel-border)] flex items-center justify-center bg-[var(--input-bg)] mb-4">
+              <img 
+                src="/icon-192x192.png" 
+                alt="شعار المنظومة" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">تسجيل الدخول الآمن</h2>
             <p className="text-sm text-[var(--text-secondary)] mt-1">مدير تعليقات صيدلية أبناء الصغير</p>
@@ -355,8 +359,12 @@ export default function Home() {
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-center justify-between pb-6 mb-8 border-b border-[var(--panel-border)] gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#FF6C37] to-[#FF3B30] flex items-center justify-center shadow-lg">
-              <MessageSquare className="text-white w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg border border-[var(--panel-border)] flex items-center justify-center bg-[var(--input-bg)] flex-shrink-0">
+              <img 
+                src="/icon-192x192.png" 
+                alt="شعار المنظومة" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)]">
