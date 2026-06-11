@@ -547,27 +547,9 @@ export default function Home() {
                 {/* Slice the array to only show N comments according to visibleCount */}
                 {filteredComments.slice(0, visibleCount).map((comment) => (
                   <article key={comment.id} className="glass-panel rounded-2xl p-5 glow-card flex flex-col gap-4 border-[var(--panel-border)]">
-                    <div className="flex items-center justify-between flex-wrap gap-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-[#FF6C37]/15 text-[#FF6C37] px-2.5 py-1 rounded-lg font-bold">
-                          معرّف الصف: #{comment.id}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                          <span>POST_ID:</span>
-                          <span className="font-mono">{comment.POST_ID || "بلا معرّف"}</span>
-                          {comment.POST_ID && (
-                            <button 
-                              onClick={() => copyToClipboard(comment.POST_ID)}
-                              className="p-1 hover:text-[var(--text-primary)] text-[var(--text-secondary)] transition-colors cursor-pointer"
-                              title="نسخ رقم المنشور"
-                            >
-                              <Copy className="w-3.5 h-3.5" />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                      <span className="text-[11px] text-[var(--text-secondary)] flex items-center gap-1.5">
-                        <Calendar className="w-3 h-3" />
+                    <div className="flex justify-end">
+                      <span className="text-[11px] text-[var(--text-secondary)] flex items-center gap-1.5 bg-[var(--input-bg)] px-3 py-1.5 rounded-xl border border-[var(--panel-border)] font-sans">
+                        <Calendar className="w-3.5 h-3.5 text-[var(--primary-color)]" />
                         {new Date(comment.updatedAt || comment.createdAt).toLocaleString("ar-LY")}
                       </span>
                     </div>
