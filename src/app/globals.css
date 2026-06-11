@@ -1,26 +1,204 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-gradient: radial-gradient(circle at top left, #0A0B10 0%, #030406 100%);
+  --panel-bg: rgba(18, 20, 32, 0.7);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(0, 0, 0, 0.4);
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-inverse: #111827;
+  --primary-glow: linear-gradient(135deg, #FF6C37 0%, #FF3B30 100%);
+  --primary-color: #FF6C37;
+  --accent-blue: #3B82F6;
+  --accent-green: #10B981;
+  --card-hover-bg: rgba(255, 255, 255, 0.03);
+  --shadow-lg: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
+  --font-family: 'Cairo', var(--font-cairo), system-ui, -apple-system, sans-serif;
+  --theme-glow: rgba(255, 108, 55, 0.04);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body.light {
+  --bg-gradient: radial-gradient(circle at top left, #F9FAFB 0%, #F3F4F6 100%);
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --input-bg: #FFFFFF;
+  --text-primary: #1F2937;
+  --text-secondary: #4B5563;
+  --text-inverse: #FFFFFF;
+  --card-hover-bg: rgba(0, 0, 0, 0.015);
+  --shadow-lg: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  --theme-glow: rgba(255, 108, 55, 0.01);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+body.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow-lg);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glow-card {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--primary-glow);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 108, 55, 0.25);
+  background: var(--card-hover-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* Custom animations */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-custom {
+  animation: spin 1s linear infinite;
+}
+
+/* Fix input colors to adapt to themes */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+}
+body.light input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+/* Markdown styling classes */
+.markdown-content {
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.markdown-content p {
+  margin-bottom: 0.75rem;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.markdown-content ul, 
+.markdown-content ol {
+  margin-bottom: 0.75rem;
+  padding-right: 1.25rem;
+  list-style-position: outside;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+}
+
+.markdown-content li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-content a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.markdown-content a:hover {
+  opacity: 0.85;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-content h1 { font-size: 1.25rem; }
+.markdown-content h2 { font-size: 1.15rem; }
+.markdown-content h3 { font-size: 1.05rem; }
+
+.markdown-content code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+body.light .markdown-content code {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.markdown-content pre {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
+
+body.light .markdown-content pre {
+  background: rgba(0, 0, 0, 0.04);
+}
+
