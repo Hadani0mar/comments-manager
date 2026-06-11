@@ -11,6 +11,11 @@ const cairoFont = Cairo({
 export const metadata: Metadata = {
   title: "مدير الردود على التعليقات - صيدلية أبناء الصغير",
   description: "لوحة تحكم تفاعلية متكاملة لعرض وتعديل الردود والتعليقات الخاصة بصيدلية أبناء الصغير",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/icon-192x192.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
