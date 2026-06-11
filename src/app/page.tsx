@@ -285,7 +285,7 @@ export default function Home() {
           <div className="flex flex-col items-center mb-8 text-center">
             <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-lg border border-[var(--panel-border)] flex items-center justify-center bg-[var(--input-bg)] mb-4">
               <img 
-                src="/icon-192x192.png" 
+                src="/favicon.ico" 
                 alt="شعار المنظومة" 
                 className="w-full h-full object-cover"
               />
@@ -361,7 +361,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg border border-[var(--panel-border)] flex items-center justify-center bg-[var(--input-bg)] flex-shrink-0">
               <img 
-                src="/icon-192x192.png" 
+                src="/favicon.ico" 
                 alt="شعار المنظومة" 
                 className="w-full h-full object-cover"
               />
